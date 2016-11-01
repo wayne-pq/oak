@@ -85,6 +85,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080"));
 		configuration.setAllowedMethods(Arrays.asList("GET", "POST"));
 		configuration.setAllowedHeaders(Arrays.asList("content-type","authorization","x-auth-token"));
+
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;

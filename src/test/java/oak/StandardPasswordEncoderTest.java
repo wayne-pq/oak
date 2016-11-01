@@ -13,6 +13,7 @@ public class StandardPasswordEncoderTest {
 	public void encode() {
 		//构造参数 传入额外的保护密文
 		String rawPassword = "1";
+
 		StandardPasswordEncoder s = new StandardPasswordEncoder("oak");
 		String encode = s.encode(rawPassword);
 		System.out.println("加密后的密码:" + encode);
