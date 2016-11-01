@@ -1,4 +1,8 @@
 /target/
+<<<<<<< HEAD
 src/main/resources/*.properties
 /hs_err_pid29012.log
 /replay_pid29012.log
+=======
+src/main/resources/*.properties
+>>>>>>> branch 'panqian' of git@github.com:lovejj1994/oak.git
