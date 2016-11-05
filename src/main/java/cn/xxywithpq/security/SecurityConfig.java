@@ -46,7 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors().and().csrf().disable();
 		http
 		.authorizeRequests()
-			.anyRequest().authenticated()
+			.antMatchers("/hadoop/icon/**").permitAll()
+			.antMatchers("/login/**").authenticated()
 			.and()
 		.requestCache()
 			.requestCache(new NullRequestCache())
