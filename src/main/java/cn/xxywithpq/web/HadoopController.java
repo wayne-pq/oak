@@ -29,7 +29,7 @@ import cn.xxywithpq.hadoop.store.input.MyOutputStreamWriter;
 @RestController
 @RequestMapping("/hadoop/")
 public class HadoopController {
-
+ 
 	private final static Log log = LogFactory.getLog(HadoopController.class);
 	
 	@Autowired
