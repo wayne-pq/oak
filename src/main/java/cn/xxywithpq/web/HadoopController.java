@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import cn.xxywithpq.domain.Icon;
-import cn.xxywithpq.hadoop.store.input.MyOutputStreamWriter;
+import cn.xxywithpq.hadoop.store.output.MyOutputStreamWriter;
 
 @RestController
 @RequestMapping("/hadoop/")
@@ -67,9 +67,9 @@ public class HadoopController {
 					uuidFileNamingStrategy, rollingFileNamingStrategy, staticFileNamingStrategy1 }));
 			writer.setFileNamingStrategy(strategy);
 			writer.write(file.getBytes());
-			writer.close();
 			Path filepath = writer.getFilePath();
 			log.info(filepath.toString());
+			writer.close();
 
 		} catch (IOException e) {
 			e.printStackTrace();
