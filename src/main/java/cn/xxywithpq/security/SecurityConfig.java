@@ -26,10 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private MyUserDetailsAuthenticationProvider authenticationProvider;
-//	@Autowired
-//	private MySavedRequestAwareAuthenticationSuccessHandler mySavedRequestAwareAuthenticationSuccessHandler;
-//	private SpringSessionBackedSessionRegistry sessionRegistry;
-	
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(authenticationProvider);
@@ -44,15 +41,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// super.configure(http);
 		// http.httpBasic();
 		http.cors().and().csrf().disable();
-		http
-		.authorizeRequests()
-			.antMatchers("/hadoop/icon/**").permitAll()
-			.antMatchers("/login/**").authenticated()
-			.and()
-		.requestCache()
-			.requestCache(new NullRequestCache())
-			.and()
-		.httpBasic();
+		http.authorizeRequests().antMatchers("/hadoop/icon/**").permitAll().antMatchers("/login/**").authenticated()
+				.and().requestCache().requestCache(new NullRequestCache()).and().httpBasic();
 		// http.csrf().disable()
 		// .formLogin()
 		// .loginPage("/login")
@@ -61,9 +51,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// .mvcMatchers(HttpMethod.GET,"/").authenticated()
 		// .anyRequest().permitAll()
 		// .and()
-//		http.authorizeRequests().antMatchers("/home/**").permitAll().antMatchers("/work/**").authenticated()
-//				.and().cors().configurationSource(corsConfigurationSource()).and().csrf().disable().httpBasic();
-		//http.formLogin().successForwardUrl("/home/loginsuccess").failureUrl("/home/loginfail");
+		// http.authorizeRequests().antMatchers("/home/**").permitAll().antMatchers("/work/**").authenticated()
+		// .and().cors().configurationSource(corsConfigurationSource()).and().csrf().disable().httpBasic();
+		// http.formLogin().successForwardUrl("/home/loginsuccess").failureUrl("/home/loginfail");
 		// http.authorizeRequests().anyRequest().authenticated().and().formLogin().and().httpBasic();
 		/*
 		 * .requiresChannel() .antMatchers("/*") .requiresSecure() .and()
@@ -83,23 +73,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080","http://www.xxywithpq.cn"));
+		configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080", "http://www.xxywithpq.cn"));
 		configuration.setAllowedMethods(Arrays.asList("GET", "POST"));
-		configuration.setAllowedHeaders(Arrays.asList("content-type","authorization","x-auth-token"));
+		configuration.setAllowedHeaders(Arrays.asList("content-type", "authorization", "x-auth-token"));
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", configuration);
 		return source;
 	}
-
-	// spring-jpa-redis
-//	@Bean
-//	public JedisConnectionFactory connectionFactory() {
-//		JedisConnectionFactory jcf = new JedisConnectionFactory();
-//		jcf.setHostName("127.0.0.1");
-//		return jcf;
-//	}
-
-	
 
 }

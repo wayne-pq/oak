@@ -3,6 +3,8 @@ package cn.xxywithpq.security;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,6 +24,8 @@ import cn.xxywithpq.service.UserService;
 @Service
 public class MyUserDetailsAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
 
+	private final static Log log = LogFactory.getLog(MyUserDetailsAuthenticationProvider.class);
+
 	@Autowired
 	private UserService userService;
 
@@ -29,11 +33,10 @@ public class MyUserDetailsAuthenticationProvider extends AbstractUserDetailsAuth
 	protected void additionalAuthenticationChecks(UserDetails userDetails,
 			UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
 		StandardPasswordEncoder s = new StandardPasswordEncoder("oak");
-		System.out.println("加密后的密码:" + userDetails.getPassword());
-		if(!s.matches(authentication.getCredentials().toString(), userDetails.getPassword())){
-			throw new BadCredentialsException(messages.getMessage(
-					"密码校验错误",
-					"Bad credentials"));
+		log.info("after Encoder : " + userDetails.getPassword());
+		if (!s.matches(authentication.getCredentials().toString(), userDetails.getPassword())) {
+			log.error("Bad credentials !!! ");
+			throw new BadCredentialsException(messages.getMessage("密码校验错误", "Bad credentials"));
 		}
 	}
 

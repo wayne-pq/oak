@@ -16,9 +16,10 @@ import com.alibaba.fastjson.JSONObject;
 @RestController
 @RequestMapping("/login")
 public class LoginController {
-	
+
 	@RequestMapping(method = RequestMethod.POST)
-	public Object Login(HttpSession session,@RequestHeader HttpHeaders headers,HttpServletRequest request,HttpServletRequest response,Authentication authentication) {
+	public Object Login(HttpSession session, @RequestHeader HttpHeaders headers, HttpServletRequest request,
+			HttpServletRequest response, Authentication authentication) {
 		JSONObject responseJson = new JSONObject();
 		String x_auth_token = (String) session.getId();
 		responseJson.put("flag", true);
@@ -26,22 +27,7 @@ public class LoginController {
 		responseJson.put("x_auth_token", x_auth_token);
 		return responseJson;
 	}
-	
-	@RequestMapping(method = RequestMethod.POST, value = "loginsuccess")
-	public Object loginSuccess(HttpServletRequest request, HttpServletResponse response,Authentication authentication) {
-		HttpSession session = request.getSession();
-		System.out.println(session.getId());
-//		Cookie cookie = new Cookie("SESSION", "880110dd-d24f-48b3-9fc7-95c118cedbb1");
-//		response.addCookie(cookie);
-		JSONObject object = new JSONObject();
-//		User myPrincipal = (User) authentication.getPrincipal();
-//		Collection<GrantedAuthority> authorities = myPrincipal.getAuthorities();
-//		ArrayList<GrantedAuthority> arrayList = new ArrayList<GrantedAuthority>(authorities);
-//		User principal = new User(myPrincipal.getUsername(), "", arrayList);
-		object.put("sessionid", session.getId());
-		object.put("msg", "登陆成功");
-		return object;
-	}
+
 	@RequestMapping(method = RequestMethod.POST, value = "loginfail")
 	public Object loginFail(HttpServletRequest request, HttpServletResponse response) {
 		JSONObject object = new JSONObject();
