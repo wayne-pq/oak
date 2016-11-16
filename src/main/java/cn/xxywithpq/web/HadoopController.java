@@ -39,6 +39,7 @@ public class HadoopController {
 			throws IOException {
 
 		JSONObject object = new JSONObject();
+		
 		try {
 			Path path = new Path("/icon3");
 			MyOutputStreamWriter writer = new MyOutputStreamWriter(hadoopConfiguration, path, null);

@@ -1,4 +1,4 @@
-package cn.xxywithpq.config;
+package cn.xxywithpq.hadoop.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.hadoop.config.annotation.EnableHadoop;
