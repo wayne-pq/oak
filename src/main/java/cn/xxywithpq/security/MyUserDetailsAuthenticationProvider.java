@@ -21,6 +21,11 @@ import com.google.common.collect.Sets;
 import cn.xxywithpq.domain.Role;
 import cn.xxywithpq.service.UserService;
 
+/**
+ * 身份校验服务
+ * @author panqian
+ * @date 2016年11月21日 上午10:02:47
+ */
 @Service
 public class MyUserDetailsAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
 
@@ -43,7 +48,6 @@ public class MyUserDetailsAuthenticationProvider extends AbstractUserDetailsAuth
 	@Override
 	protected UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken authentication)
 			throws AuthenticationException {
-		// TODO Auto-generated method stub
 		cn.xxywithpq.domain.User user = null;
 		if (null != username && !"".equals(username.trim())) {
 			user = userService.findOne(username);
@@ -56,6 +60,8 @@ public class MyUserDetailsAuthenticationProvider extends AbstractUserDetailsAuth
 		for (Role role : roles) {
 			authorities.addAll(role.getAuthorities());
 		}
+
+		log.info("user " + user.getUsername() + " attempt to login!!!");
 
 		return new User(user.getUsername(), user.getPassword(), authorities);
 	}
