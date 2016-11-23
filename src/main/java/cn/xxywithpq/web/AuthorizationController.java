@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.common.collect.Maps;
 
 @RestController
-@RequestMapping("/login")
-public class LoginController {
+@RequestMapping("/auth")
+public class AuthorizationController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public Object Login(HttpSession session, @RequestHeader HttpHeaders headers, HttpServletRequest request,

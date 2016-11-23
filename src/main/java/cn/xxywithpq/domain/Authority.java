@@ -1,6 +1,6 @@
 package cn.xxywithpq.domain;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,9 +12,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.kitesdk.shaded.com.google.common.collect.Sets;
 import org.springframework.security.core.GrantedAuthority;
-
-import com.google.common.collect.Lists;
 
 /**
  * 权限表
@@ -38,14 +37,14 @@ public class Authority implements GrantedAuthority {
 
 	@Column(name = "ROLE")
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-			CascadeType.REFRESH }, fetch = FetchType.EAGER, targetEntity = cn.xxywithpq.domain.Role.class, mappedBy = "authorities")
-	public List<Role> roles = Lists.newArrayList();
+			CascadeType.REFRESH }, fetch = FetchType.LAZY, targetEntity = cn.xxywithpq.domain.Role.class, mappedBy = "authorities")
+	public Set<Role> roles = Sets.newLinkedHashSet();
 
 	public Authority() {
 		super();
 	}
 
-	public Authority(Long id, String authority, List<Role> roles) {
+	public Authority(Long id, String authority, Set<Role> roles) {
 		super();
 		this.id = id;
 		this.authority = authority;
@@ -69,11 +68,11 @@ public class Authority implements GrantedAuthority {
 		this.authority = authority;
 	}
 
-	public List<Role> getRoles() {
+	public Set<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<Role> roles) {
+	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
 

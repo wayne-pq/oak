@@ -1,6 +1,5 @@
 package cn.xxywithpq.security;
 
-import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
@@ -53,7 +52,7 @@ public class MyUserDetailsAuthenticationProvider extends AbstractUserDetailsAuth
 			user = userService.findOne(username);
 		}
 
-		List<Role> roles = user.getRoles();
+		Set<Role> roles = user.getRoles();
 
 		Set<GrantedAuthority> authorities = Sets.newHashSet();
 
