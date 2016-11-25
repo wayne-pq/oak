@@ -17,5 +17,10 @@ public class UserService {
 	public User findOne(String username) {
 		return userRepository.findByUsername(username);
 	}
+	
+	@Transactional
+	public User save(User user) {
+		return userRepository.save(user);
+	}
 
 }

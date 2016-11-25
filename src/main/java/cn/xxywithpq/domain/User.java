@@ -42,6 +42,10 @@ public class User implements Serializable {
 	public String password;
 
 	@NotNull
+	@Column(name = "email", length = 80)
+	public String email;
+
+	@NotNull
 	@Column(name = "ENABLED")
 	public Boolean enabled;
 
@@ -114,6 +118,14 @@ public class User implements Serializable {
 
 	public void setIcon(Icon icon) {
 		this.icon = icon;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

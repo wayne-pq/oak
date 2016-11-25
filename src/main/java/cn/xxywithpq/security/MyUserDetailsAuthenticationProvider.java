@@ -12,13 +12,13 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.Sets;
 
 import cn.xxywithpq.domain.Role;
 import cn.xxywithpq.service.UserService;
+import cn.xxywithpq.utils.CryptoUtil;
 
 /**
  * 身份校验服务
@@ -36,9 +36,8 @@ public class MyUserDetailsAuthenticationProvider extends AbstractUserDetailsAuth
 	@Override
 	protected void additionalAuthenticationChecks(UserDetails userDetails,
 			UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
-		StandardPasswordEncoder s = new StandardPasswordEncoder("oak");
-		log.info("after Encoder : " + userDetails.getPassword());
-		if (!s.matches(authentication.getCredentials().toString(), userDetails.getPassword())) {
+		
+		if (!CryptoUtil.matches(authentication.getCredentials().toString(), userDetails.getPassword())) {
 			log.error("Bad credentials !!! ");
 			throw new BadCredentialsException(messages.getMessage("密码校验错误", "Bad credentials"));
 		}

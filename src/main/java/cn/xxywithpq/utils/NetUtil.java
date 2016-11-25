@@ -2,7 +2,7 @@ package cn.xxywithpq.utils;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class NetUtils {
+public class NetUtil {
 	public static String getIpAddr(HttpServletRequest request) {
 		String ip = request.getHeader("x-forwarded-for");
 		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
