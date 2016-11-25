@@ -2,8 +2,6 @@ package cn.xxywithpq.web;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
@@ -15,6 +13,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.fs.Path;
 import org.kitesdk.shaded.com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.hadoop.store.strategy.naming.ChainedFileNamingStrategy;
 import org.springframework.data.hadoop.store.strategy.naming.FileNamingStrategy;
 import org.springframework.data.hadoop.store.strategy.naming.RollingFileNamingStrategy;
@@ -29,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import cn.xxywithpq.domain.Icon;
 import cn.xxywithpq.hadoop.store.output.MyOutputStreamWriter;
+import cn.xxywithpq.utils.SpringDataRedisUtil;
 
 @RestController
 @RequestMapping("/hadoop/")
@@ -38,18 +38,20 @@ public class HadoopController {
 	
 	private final static String preTempIcon = "TempIcon-";
 	
-	private static Calendar now = Calendar.getInstance();
-
+	private SpringDataRedisUtil redisUtil;
+	
 	@Autowired
 	private org.apache.hadoop.conf.Configuration hadoopConfiguration;
 	
     @Autowired
-    private RedisTemplate<String, Icon> iconRedisTemplate;
+    @Qualifier("redisTemplate")
+    private RedisTemplate iconRedisTemplate;
 
 	@RequestMapping(method = RequestMethod.POST, value = "icon/upload")
 	public Object iconUpload(@RequestParam MultipartFile file, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
 
+		redisUtil = new SpringDataRedisUtil(iconRedisTemplate);
 		Map<String, Object> object = Maps.newLinkedHashMap();
 		
 		try {
@@ -72,22 +74,21 @@ public class HadoopController {
 					uuidFileNamingStrategy, rollingFileNamingStrategy, staticFileNamingStrategyafter }));
 
 			writer.setFileNamingStrategy(strategy);
-			writer.write(file.getBytes());
+//			writer.write(file.getBytes());
 			Path filepath = writer.getFilePath();
 			String iconpath = "http://www.xxywithpq.cn:50070/webhdfs/v1" + filepath + "?op=OPEN";
 			
 			Icon icon = new Icon(preTempIcon+UUID.randomUUID().toString(), filepath+"", ipAddr);
 			
 			//icon先存进redis，正式注册再存入数据库
-			iconRedisTemplate.opsForValue().set(icon.getId(), icon);
-			now.setTime(new Date());
-			now.add(Calendar.MINUTE, 3);
-			iconRedisTemplate.expireAt(icon.getId(), now.getTime());
 			
-			log.info("return filepath = " + iconpath);
+			boolean result = redisUtil.set(icon.getId(), icon, new Long(180));
+			
+			
+			log.info("return iconpath = " + iconpath);
 			object.put("iconpath", iconpath);
-			writer.close();
-		} catch (IOException e) {
+//			writer.close();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return object;
