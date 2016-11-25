@@ -76,7 +76,7 @@ public class HadoopController {
 			writer.setFileNamingStrategy(strategy);
 			writer.write(file.getBytes());
 			Path filepath = writer.getFilePath();
-			String iconpath = "http://www.xxywithpq.cn:50070/webhdfs/v1" + filepath + "?op=OPEN";
+			String iconpath = "https://www.xxywithpq.cn:50470/webhdfs/v1" + filepath + "?op=OPEN";
 			
 			Icon icon = new Icon(preTempIcon+UUID.randomUUID().toString(), filepath+"", ipAddr);
 			
