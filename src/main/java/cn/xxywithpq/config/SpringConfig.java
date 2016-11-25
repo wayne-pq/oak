@@ -19,8 +19,8 @@ public class SpringConfig {
 
 	// spring-jpa-redis
 	@Bean
-	public RedisTemplate redisTemplate() {
-		RedisTemplate rt = new RedisTemplate();
+	public RedisTemplate<String, Object> redisTemplate() {
+		RedisTemplate<String, Object> rt = new RedisTemplate<String, Object>();
 		rt.setConnectionFactory(jedisConnectionFactory);
 		rt.setKeySerializer(new StringRedisSerializer());
 		return rt;
