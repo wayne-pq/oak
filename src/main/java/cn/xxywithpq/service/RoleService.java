@@ -21,7 +21,7 @@ public class RoleService {
 
 	@Transactional(readOnly = true)
 	public Role findOne(Long id) {
-		return roleRepository.findById(id);
+		return roleRepository.findOne(id);
 	}
 
 	@Transactional

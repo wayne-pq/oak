@@ -1,15 +1,18 @@
 package cn.xxywithpq.domain;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import org.kitesdk.shaded.com.google.common.collect.Sets;
 
 @Entity
 @Table(name = "OAK_ICON")
@@ -28,9 +31,9 @@ public class Icon implements Serializable {
 	@Column(name = "IPADDR", length = 50)
 	public String ipAddr;
 
-	@OneToOne(mappedBy = "icon", cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-			CascadeType.REFRESH }, fetch = FetchType.LAZY)
-	public User user;
+	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+			CascadeType.REFRESH }, fetch = FetchType.LAZY, mappedBy = "icon")
+	public Set<User> users = Sets.newLinkedHashSet();
 
 	public Icon() {
 	}
@@ -65,12 +68,12 @@ public class Icon implements Serializable {
 		this.ipAddr = ipAddr;
 	}
 
-	public User getUser() {
-		return user;
+	public Set<User> getUsers() {
+		return users;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setUsers(Set<User> users) {
+		this.users = users;
 	}
 
 }

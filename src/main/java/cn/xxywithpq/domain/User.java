@@ -11,7 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -54,9 +54,10 @@ public class User implements Serializable {
 			CascadeType.REFRESH }, fetch = FetchType.EAGER, targetEntity = cn.xxywithpq.domain.Role.class)
 	public Set<Role> roles = Sets.newLinkedHashSet();
 
-	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
-			CascadeType.REFRESH }, fetch = FetchType.EAGER, targetEntity = cn.xxywithpq.domain.Icon.class)
-	@JoinColumn(name = "ICON_ID", unique = true, nullable = true, updatable = true)
+	
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+			CascadeType.REFRESH }, fetch = FetchType.EAGER)
+    @JoinColumn(name="ICON_ID", nullable=true)
 	public Icon icon;
 
 	public User() {

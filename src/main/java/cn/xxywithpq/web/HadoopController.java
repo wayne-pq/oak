@@ -79,7 +79,7 @@ public class HadoopController {
 					uuidFileNamingStrategy, rollingFileNamingStrategy, staticFileNamingStrategyafter }));
 
 			writer.setFileNamingStrategy(strategy);
-//			writer.write(file.getBytes());
+			writer.write(file.getBytes());
 			Path filepath = writer.getFilePath();
 			String iconpath = "https://www.xxywithpq.cn:50470/webhdfs/v1" + filepath + "?op=OPEN";
 			
@@ -90,13 +90,13 @@ public class HadoopController {
 			boolean result = redisUtil.set(icon.getId(), icon, new Long(180));
 			
 			
-			rabbitTemplate.convertAndSend("test.rabbit.direct","test.rabbit.binding","hello");
-			log.info("rabbit--一条短信息发送。。。。。");
+//			rabbitTemplate.convertAndSend("test.rabbit.direct","test.rabbit.binding","hello");
+//			log.info("rabbit--一条短信息发送。。。。。");
 			
 			log.info("return iconpath = " + iconpath);
 			object.put("iconpath", iconpath);
 			object.put("iconid", icon.getId());
-//			writer.close();
+			writer.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

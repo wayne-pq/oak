@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<style>
+#main {
+	height: 40rem;
+	background-color: papayawhip;
+}
+
+img {
+	width: 100%;
+}
+
+#now {
+	float: right;
+	margin-right: 2rem;
+}
+</style>
+</head>
+
+<body>
+	<div id="main">
+		<img src="https://p1.bpimg.com/577438/99beee2dcdc3dd0a.jpg" /> <br />
+		<br /> <br /> &nbsp;&nbsp; <span> 欢迎来到 oak : </span> <br /> <span
+			th:text="${content}"> </span> <br /> <br /> <br /> <span id="now"
+			th:text="${now}"></span>
+	</div>
+</body>
+</html>
