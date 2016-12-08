@@ -76,5 +76,43 @@ public class AuthorizationController {
 		// userService.save(user);
 		return responseJson;
 	}
+	@RequestMapping(method = RequestMethod.POST, value = "/active")
+	public Object active(HttpSession session, @RequestHeader HttpHeaders headers, HttpServletRequest request,
+			HttpServletRequest response, Authentication authentication, User user) {
+		Map<String, Object> responseJson = Maps.newLinkedHashMap();
+
+		log.info("begin to regist... ip : " + NetUtil.getIpAddr(request));
+
+		boolean flag = true;
+
+		try {
+			if (null != userService.findOne(user.getUsername())) {
+				flag = false;
+				responseJson.put("flag", flag);
+				responseJson.put("msg", "用户名重复");
+				log.error("The user name repetition。。。。");
+				return responseJson;
+			}
+
+			Role userRole = roleService.findOne(new Long("2"));
+
+			LinkedHashSet<Role> sets = Sets.newLinkedHashSet();
+			sets.add(userRole);
+
+			user.setRoles(sets);
+			user.setEnabled(false);
+
+			user.setPassword(CryptoUtil.encoder(user.getPassword()));
+
+			userService.save(user);
+		} catch (Exception e) {
+			log.error("regist fail......");
+			flag = false;
+		}
+
+		responseJson.put("flag", flag);
+		// userService.save(user);
+		return responseJson;
+	}
 
 }

@@ -79,7 +79,7 @@ public class HadoopController {
 					uuidFileNamingStrategy, rollingFileNamingStrategy, staticFileNamingStrategyafter }));
 
 			writer.setFileNamingStrategy(strategy);
-//			writer.write(file.getBytes());
+			writer.write(file.getBytes());
 			Path filepath = writer.getFilePath();
 			String iconpath = "https://www.xxywithpq.cn:50470/webhdfs/v1" + filepath + "?op=OPEN";
 			
@@ -96,7 +96,7 @@ public class HadoopController {
 			log.info("return iconpath = " + iconpath);
 			object.put("iconpath", iconpath);
 			object.put("iconid", icon.getId());
-//			writer.close();
+			writer.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
