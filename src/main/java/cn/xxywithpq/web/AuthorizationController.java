@@ -91,7 +91,7 @@ public class AuthorizationController {
 				String pattern = "icon-.+(?=.png)";
 
 				Pattern r = Pattern.compile(pattern);
-				Matcher m = r.matcher(iconid);
+				Matcher m = r.matcher(icon.getPath());
 				if (m.find()) {
 					icon.setId(m.group(0));
 					log.info("icon id :" + m.group(0));
