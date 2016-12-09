@@ -96,7 +96,7 @@ public class AuthorizationController {
 					icon.setId(m.group(0));
 					log.info("icon id :" + m.group(0));
 				}
-				iconService.save(icon);
+//				iconService.save(icon);
 				user.setIcon(icon);
 			}
 
