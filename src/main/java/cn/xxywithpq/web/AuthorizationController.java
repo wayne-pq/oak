@@ -112,6 +112,7 @@ public class AuthorizationController {
 			info.setId(UUID.randomUUID().toString());
 			info.setSetTo(user.getEmail());
 			info.setUserName(user.getUsername());
+			info.setActiveCode(CryptoUtil.encoder(user.getUsername()+user.getId()));
 			rabbitTemplate.convertAndSend("test.rabbit.direct", "test.rabbit.binding", info);
 		} catch (Exception e) {
 			log.error("regist fail......");

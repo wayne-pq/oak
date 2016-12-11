@@ -16,7 +16,7 @@ public class StandardPasswordEncoderTest {
 
 		StandardPasswordEncoder s = new StandardPasswordEncoder("oak");
 		String encode = s.encode(rawPassword);
-		System.out.println("加密后的密码:" + encode);
-		System.out.println("是否匹配？ " + s.matches(rawPassword, encode));
+		System.out.println("after encrypt:" + encode);
+		System.out.println("match？ " + s.matches(rawPassword, encode));
 	}
 }

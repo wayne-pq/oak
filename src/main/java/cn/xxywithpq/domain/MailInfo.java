@@ -18,14 +18,9 @@ public class MailInfo implements Serializable {
 
 	private String setTo;
 
-	public MailInfo() {
-	}
+	private String activeCode;
 
-	public MailInfo(String id, String userName, String setTo) {
-		super();
-		this.id = id;
-		this.userName = userName;
-		this.setTo = setTo;
+	public MailInfo() {
 	}
 
 	public String getId() {
@@ -50,6 +45,14 @@ public class MailInfo implements Serializable {
 
 	public void setSetTo(String setTo) {
 		this.setTo = setTo;
+	}
+
+	public String getActiveCode() {
+		return activeCode;
+	}
+
+	public void setActiveCode(String activeCode) {
+		this.activeCode = activeCode;
 	}
 
 }

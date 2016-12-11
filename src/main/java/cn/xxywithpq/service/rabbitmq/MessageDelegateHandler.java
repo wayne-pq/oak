@@ -51,7 +51,8 @@ public class MessageDelegateHandler implements MessageDelegate {
 			ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
 			resolver.setPrefix("/mail/");
 			resolver.setSuffix(".html");
-			resolver.setCharacterEncoding("ISO-8859-1");
+//			resolver.setCharacterEncoding("ISO-8859-1");
+			resolver.setCharacterEncoding(UTF8);
 			resolver.setTemplateMode(TemplateMode.HTML);
 
 			TemplateEngine templateEngine = new TemplateEngine();
@@ -61,8 +62,8 @@ public class MessageDelegateHandler implements MessageDelegate {
 			SimpleDateFormat format = new SimpleDateFormat("YYYY年MM月dd日");
 			String now = format.format(new Date());
 			try {
-				context.setVariable("content", new String("待续".getBytes(), "ISO-8859-1"));
-				context.setVariable("now", new String(now.getBytes(), "ISO-8859-1"));
+				context.setVariable("href", "http://localhost:8080/registSuccess/u/"+mailInfo.getUserName()+"/code/"+mailInfo.getActiveCode());
+				context.setVariable("now", new String(now.getBytes(), UTF8));
 			} catch (UnsupportedEncodingException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -75,7 +76,7 @@ public class MessageDelegateHandler implements MessageDelegate {
 			e.printStackTrace();
 		}
 		javaMailSender.send(message);
-		logger.info("邮件发送成功。。。。。。");
+		logger.info("mail send success。。。。。。");
 	}
 
 }
