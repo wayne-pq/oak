@@ -81,7 +81,7 @@ public class HadoopController {
 			writer.setFileNamingStrategy(strategy);
 			writer.write(file.getBytes());
 			Path filepath = writer.getFilePath();
-			String iconpath = "https://www.xxywithpq.cn:50470/webhdfs/v1" + filepath + "?op=OPEN";
+			String iconpath = "http://www.xxywithpq.cn:50070/webhdfs/v1" + filepath + "?op=OPEN";
 			
 			Icon icon = new Icon(preTempIcon+UUID.randomUUID().toString(), filepath+"", ipAddr);
 			
@@ -90,8 +90,7 @@ public class HadoopController {
 			boolean result = redisUtil.set(icon.getId(), icon, new Long(180));
 			
 			
-//			rabbitTemplate.convertAndSend("test.rabbit.direct","test.rabbit.binding","hello");
-//			log.info("rabbit--一条短信息发送。。。。。");
+
 			
 			log.info("return iconpath = " + iconpath);
 			object.put("iconpath", iconpath);

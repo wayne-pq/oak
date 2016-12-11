@@ -19,7 +19,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
-import cn.xxywithpq.service.MessageDelegate;
+import cn.xxywithpq.service.rabbitmq.MessageDelegate;
 
 /**
  * 一些配置项
@@ -90,7 +90,7 @@ public class SpringConfig {
 			MessageDelegate handler) {
 		org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter adapter = new org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter(
 				handler);
-		adapter.setDefaultListenerMethod("handleRabbitMsg");
+		adapter.setDefaultListenerMethod("handleRabbitMsgForSendMail");
 		adapter.setMessageConverter(rabbitMessageConverter());
 		return adapter;
 	}

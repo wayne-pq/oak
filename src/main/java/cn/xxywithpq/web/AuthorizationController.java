@@ -2,6 +2,7 @@ package cn.xxywithpq.web;
 
 import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -24,6 +26,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
 import cn.xxywithpq.domain.Icon;
+import cn.xxywithpq.domain.MailInfo;
 import cn.xxywithpq.domain.Role;
 import cn.xxywithpq.domain.User;
 import cn.xxywithpq.service.IconService;
@@ -53,6 +56,10 @@ public class AuthorizationController {
 	@Autowired
 	@Qualifier("redisTemplate")
 	private RedisTemplate iconRedisTemplate;
+
+	@Autowired
+	@Qualifier("myRabbitTemplate")
+	private RabbitTemplate rabbitTemplate;
 
 	@RequestMapping(method = RequestMethod.POST, value = "/regist")
 	public Object regist(HttpSession session, @RequestHeader HttpHeaders headers, HttpServletRequest request,
@@ -100,6 +107,12 @@ public class AuthorizationController {
 			}
 
 			userService.save(user);
+
+			MailInfo info = new MailInfo();
+			info.setId(UUID.randomUUID().toString());
+			info.setSetTo(user.getEmail());
+			info.setUserName(user.getUsername());
+			rabbitTemplate.convertAndSend("test.rabbit.direct", "test.rabbit.binding", info);
 		} catch (Exception e) {
 			log.error("regist fail......");
 			flag = false;
