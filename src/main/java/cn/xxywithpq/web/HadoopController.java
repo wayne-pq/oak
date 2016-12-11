@@ -90,8 +90,7 @@ public class HadoopController {
 			boolean result = redisUtil.set(icon.getId(), icon, new Long(180));
 			
 			
-//			rabbitTemplate.convertAndSend("test.rabbit.direct","test.rabbit.binding","hello");
-//			log.info("rabbit--一条短信息发送。。。。。");
+
 			
 			log.info("return iconpath = " + iconpath);
 			object.put("iconpath", iconpath);
