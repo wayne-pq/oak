@@ -60,14 +60,14 @@ public class MessageDelegateHandler implements MessageDelegate {
 
 			Context context = new Context();
 			try {
-				SimpleDateFormat format = new SimpleDateFormat(new String("YYYY年MM月dd日".getBytes(), "GBK"));
+				SimpleDateFormat format = new SimpleDateFormat(new String("YYYY年MM月dd日".getBytes("GBK"), "GBK"));
 				String now = format.format(new Date());
 				context.setVariable("href", "https://www.xxywithpq.cn/registSuccess/u/" + mailInfo.getUserName()
 						+ "/code/" + mailInfo.getActiveCode());
 				// context.setVariable("href",
 				// "http://localhost:8080/registSuccess/u/"+mailInfo.getUserName()+"/code/"+mailInfo.getActiveCode());
 				// context.setVariable("now", new String(now.getBytes(), UTF8));
-				context.setVariable("now", new String(now.getBytes(), "GBK"));
+				context.setVariable("now", new String(now.getBytes("GBK"), "GBK"));
 			} catch (UnsupportedEncodingException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
