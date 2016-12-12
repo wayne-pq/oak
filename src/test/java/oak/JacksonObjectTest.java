@@ -15,7 +15,7 @@ import cn.xxywithpq.domain.User;
  * @author panqian
  * @date 2016年11月21日 下午1:32:19
  */
-public class JsonObject {
+public class JacksonObjectTest {
 
 	@Test
 	public void encode() throws IOException {
