@@ -73,7 +73,7 @@ public class AuthorizationController {
 		boolean flag = true;
 
 		try {
-			if (null != userService.findOne(user.getUsername())) {
+			if (null != userService.findByUsername(user.getUsername())) {
 				flag = false;
 				responseJson.put("flag", flag);
 				responseJson.put("msg", "用户名重复");
@@ -126,37 +126,44 @@ public class AuthorizationController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/active")
-	public Object active(HttpSession session, @RequestHeader HttpHeaders headers, HttpServletRequest request,
-			HttpServletRequest response, Authentication authentication, User user) {
+	public Object active( HttpServletRequest request,
+			HttpServletRequest response, String username,String activecode) {
 		Map<String, Object> responseJson = Maps.newLinkedHashMap();
 
-		log.info("begin to regist... ip : " + NetUtil.getIpAddr(request));
+		log.info("begin to active... ip : " + NetUtil.getIpAddr(request));
 
 		boolean flag = true;
 
 		try {
-			if (null != userService.findOne(user.getUsername())) {
+			User user = userService.findByUsername(username);
+			
+			if (null == user) {
 				flag = false;
 				responseJson.put("flag", flag);
-				responseJson.put("msg", "用户名重复");
-				log.error("The user name repetition。。。。");
+				responseJson.put("msg", "找不到此用户");
+				log.error("The user unfound...");
 				return responseJson;
+			}else if(!CryptoUtil.matches(user.getUsername()+user.getId(), activecode)){
+				flag = false;
+				responseJson.put("flag", flag);
+				responseJson.put("msg", "激活码有误");
+				log.error("activecode is wrong...");
+				return responseJson;
+			}else if(user.getEnabled()){
+				flag = false;
+				responseJson.put("flag", flag);
+				responseJson.put("msg", "用户已激活,请勿重复激活");
+				log.error("The user has activated...");
+				return responseJson;
+			}else{
+				user.setEnabled(true);
+				userService.save(user);
 			}
 
-			Role userRole = roleService.findOne(new Long("2"));
-
-			LinkedHashSet<Role> sets = Sets.newLinkedHashSet();
-			sets.add(userRole);
-
-			user.setRoles(sets);
-			user.setEnabled(false);
-
-			user.setPassword(CryptoUtil.encoder(user.getPassword()));
-
-			userService.save(user);
 		} catch (Exception e) {
-			log.error("regist fail......");
+			log.error("active fail......");
 			flag = false;
+			responseJson.put("msg", "激活失败");
 		}
 
 		responseJson.put("flag", flag);

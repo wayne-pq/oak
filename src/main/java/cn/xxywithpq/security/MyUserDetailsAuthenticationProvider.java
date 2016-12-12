@@ -48,7 +48,7 @@ public class MyUserDetailsAuthenticationProvider extends AbstractUserDetailsAuth
 			throws AuthenticationException {
 		cn.xxywithpq.domain.User user = null;
 		if (null != username && !"".equals(username.trim())) {
-			user = userService.findOne(username);
+			user = userService.findByUsername(username);
 		}
 
 		Set<Role> roles = user.getRoles();
