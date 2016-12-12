@@ -43,7 +43,7 @@ public class MessageDelegateHandler implements MessageDelegate {
 		MimeMessage message = javaMailSender.createMimeMessage();
 		MimeMessageHelper helper;
 		try {
-			helper = new MimeMessageHelper(message, true,"GBK");
+			helper = new MimeMessageHelper(message, true, "GBK");
 			helper.setTo(mailInfo.getSetTo());
 			helper.setSubject("welcome to oak : " + mailInfo.getUserName());
 
@@ -51,7 +51,7 @@ public class MessageDelegateHandler implements MessageDelegate {
 			ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
 			resolver.setPrefix("/mail/");
 			resolver.setSuffix(".html");
-			resolver.setCharacterEncoding("ISO-8859-1");
+			// resolver.setCharacterEncoding("ISO-8859-1");
 			resolver.setCharacterEncoding("GBK");
 			resolver.setTemplateMode(TemplateMode.HTML);
 
@@ -59,9 +59,9 @@ public class MessageDelegateHandler implements MessageDelegate {
 			templateEngine.setTemplateResolver(resolver);
 
 			Context context = new Context();
-			SimpleDateFormat format = new SimpleDateFormat("YYYY年MM月dd日");
-			String now = format.format(new Date());
 			try {
+				SimpleDateFormat format = new SimpleDateFormat(new String("YYYY年MM月dd日".getBytes(), "GBK"));
+				String now = format.format(new Date());
 				context.setVariable("href", "https://www.xxywithpq.cn/registSuccess/u/" + mailInfo.getUserName()
 						+ "/code/" + mailInfo.getActiveCode());
 				// context.setVariable("href",
