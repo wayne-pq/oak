@@ -43,7 +43,7 @@ public class MessageDelegateHandler implements MessageDelegate {
 		MimeMessage message = javaMailSender.createMimeMessage();
 		MimeMessageHelper helper;
 		try {
-			helper = new MimeMessageHelper(message, true);
+			helper = new MimeMessageHelper(message, true,"GBK");
 			helper.setTo(mailInfo.getSetTo());
 			helper.setSubject("welcome to oak : " + mailInfo.getUserName());
 
@@ -52,7 +52,7 @@ public class MessageDelegateHandler implements MessageDelegate {
 			resolver.setPrefix("/mail/");
 			resolver.setSuffix(".html");
 			resolver.setCharacterEncoding("ISO-8859-1");
-			// resolver.setCharacterEncoding(UTF8);
+			resolver.setCharacterEncoding("GBK");
 			resolver.setTemplateMode(TemplateMode.HTML);
 
 			TemplateEngine templateEngine = new TemplateEngine();
@@ -67,7 +67,7 @@ public class MessageDelegateHandler implements MessageDelegate {
 				// context.setVariable("href",
 				// "http://localhost:8080/registSuccess/u/"+mailInfo.getUserName()+"/code/"+mailInfo.getActiveCode());
 				// context.setVariable("now", new String(now.getBytes(), UTF8));
-				context.setVariable("now", new String(now.getBytes(), "ISO-8859-1"));
+				context.setVariable("now", new String(now.getBytes(), "GBK"));
 			} catch (UnsupportedEncodingException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -80,7 +80,7 @@ public class MessageDelegateHandler implements MessageDelegate {
 			e.printStackTrace();
 		}
 		javaMailSender.send(message);
-		logger.info("mail send success。。。。。。");
+		logger.info("mail send success.....");
 	}
 
 }
