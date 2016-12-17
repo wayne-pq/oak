@@ -1,7 +1,7 @@
 package cn.xxywithpq.domain;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,11 +9,13 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import com.google.common.collect.Lists;
+import org.kitesdk.shaded.com.google.common.collect.Sets;
 
 /**
  * 用户类
@@ -40,19 +42,29 @@ public class User implements Serializable {
 	public String password;
 
 	@NotNull
+	@Column(name = "email", length = 80)
+	public String email;
+
+	@NotNull
 	@Column(name = "ENABLED")
 	public Boolean enabled;
 
 	@Column(name = "ROLE")
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REFRESH }, fetch = FetchType.EAGER, targetEntity = cn.xxywithpq.domain.Role.class)
-	public List<Role> roles = Lists.newArrayList();
+	public Set<Role> roles = Sets.newLinkedHashSet();
+
+	
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
+			CascadeType.REFRESH }, fetch = FetchType.EAGER)
+    @JoinColumn(name="ICON_ID", nullable=true)
+	public Icon icon;
 
 	public User() {
 		super();
 	}
 
-	public User(Long id, String username, String password, Boolean enabled, List<Role> roles) {
+	public User(Long id, String username, String password, Boolean enabled, Set<Role> roles) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -69,11 +81,11 @@ public class User implements Serializable {
 		this.id = id;
 	}
 
-	public List<Role> getRoles() {
+	public Set<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<Role> roles) {
+	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
 
@@ -99,6 +111,22 @@ public class User implements Serializable {
 
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public Icon getIcon() {
+		return icon;
+	}
+
+	public void setIcon(Icon icon) {
+		this.icon = icon;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

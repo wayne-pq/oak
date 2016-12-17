@@ -1,7 +1,7 @@
 package cn.xxywithpq.domain;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,7 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import com.google.common.collect.Lists;
+import org.kitesdk.shaded.com.google.common.collect.Sets;
 
 /**
  * 角色类
@@ -38,18 +38,18 @@ public class Role implements Serializable {
 	@Column(name = "USER")
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REFRESH }, fetch = FetchType.LAZY, targetEntity = cn.xxywithpq.domain.User.class, mappedBy = "roles")
-	private List<User> users = Lists.newArrayList();
+	private Set<User> users = Sets.newLinkedHashSet();
 
 	@Column(name = "AUTHORITIE")
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE,
 			CascadeType.REFRESH }, fetch = FetchType.EAGER, targetEntity = cn.xxywithpq.domain.Authority.class)
-	private List<Authority> authorities = Lists.newArrayList();
+	private Set<Authority> authorities = Sets.newLinkedHashSet();
 
 	public Role() {
 		super();
 	}
 
-	public Role(String roleName, List<User> users) {
+	public Role(String roleName, Set<User> users) {
 		super();
 		this.roleName = roleName;
 		this.users = users;
@@ -71,19 +71,19 @@ public class Role implements Serializable {
 		this.roleName = roleName;
 	}
 
-	public List<User> getUsers() {
+	public Set<User> getUsers() {
 		return users;
 	}
 
-	public void setUsers(List<User> users) {
+	public void setUsers(Set<User> users) {
 		this.users = users;
 	}
 
-	public List<Authority> getAuthorities() {
+	public Set<Authority> getAuthorities() {
 		return authorities;
 	}
 
-	public void setAuthorities(List<Authority> authorities) {
+	public void setAuthorities(Set<Authority> authorities) {
 		this.authorities = authorities;
 	}
 

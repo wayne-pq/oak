@@ -5,17 +5,19 @@
 	<artifactId>oak</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Pan Qian , Xu Xinyi</name>
+	<url>xxywithpq.cn</url>
 	<description>To the oak tree</description>
 
 	<properties>
 		<java.version>1.8</java.version>
+		<thymeleaf.version>3.0.2.RELEASE</thymeleaf.version>
+		<thymeleaf-layout-dialect.version>2.1.1</thymeleaf-layout-dialect.version>
 	</properties>
 	<!-- Inherit defaults from Spring Boot -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.0.0.BUILD-SNAPSHOT</version>
-
 	</parent>
 
 	<dependencies>
@@ -39,10 +41,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jdbc</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
@@ -50,9 +48,58 @@
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.session</groupId>
-			<artifactId>spring-session</artifactId>
-			<version>1.3.0.M2</version>
+			<groupId>org.springframework.security.oauth</groupId>
+			<artifactId>spring-security-oauth2</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-hadoop-boot</artifactId>
+			<version>2.4.0.RELEASE</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>servlet-api</artifactId>
+					<groupId>javax.servlet</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-hadoop-store</artifactId>
+			<version>2.4.0.RELEASE</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>servlet-api</artifactId>
+					<groupId>javax.servlet</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.htmlparser</groupId>
+			<artifactId>htmlparser</artifactId>
+			<version>2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.rabbitmq</groupId>
+			<artifactId>amqp-client</artifactId>
+			<version>4.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.thymeleaf</groupId>
+			<artifactId>thymeleaf</artifactId>
+			<version>3.0.2.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
@@ -62,11 +109,6 @@
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>19.0</version>
-		</dependency>
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>fastjson</artifactId>
-			<version>1.2.20</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -110,8 +152,4 @@
 			<url>http://repo.spring.io/milestone</url>
 		</pluginRepository>
 	</pluginRepositories>
-
-
-
-	<url>xxywithpq.cn</url>
 </project>
