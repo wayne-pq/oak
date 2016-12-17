@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<META http-equiv=Content-Type content='text/html; charset=GBK'>
+<style>
+#main {
+	height: 40rem;
+	background-color: #F7F7F7;
+}
+
+img {
+	width: 100%;
+}
+
+#now {
+	float: right;
+	margin-right: 2rem;
+}
+</style>
+</head>
+
+<body>
+	<div id="main">
+		<img src="https://p1.bpimg.com/577438/99beee2dcdc3dd0a.jpg" /> <br />
+		<br /> <br /> &nbsp;&nbsp; <span> 欢迎来到 oak : </span> <br /><br />
+		&nbsp;&nbsp;&nbsp;&nbsp;<span>请点击<a th:href="${href}">链接</a>进行账号激活
+		</span> <br /> <span th:text="${content}"> </span> <br /> <br /> <br /> <span
+			id="now" th:text="${now}"></span>
+	</div>
+</body>
+</html>
